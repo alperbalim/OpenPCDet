@@ -218,6 +218,12 @@ def main():
     )
     eval_output_dir = output_dir / 'eval' / 'eval_with_train'
     eval_output_dir.mkdir(parents=True, exist_ok=True)
+    # `args` is a variable that stores the parsed command-line arguments using the
+    # `argparse.ArgumentParser` in the Python script. These arguments are used to configure various
+    # aspects of the training process such as batch size, number of epochs, workers for dataloader,
+    # checkpoint paths, distributed training settings, logging options, and more. The `args` variable
+    # is then used throughout the script to access these configuration parameters and customize the
+    # training process accordingly.
     args.start_epoch = max(args.epochs - args.num_epochs_to_eval, 0)  # Only evaluate the last args.num_epochs_to_eval epochs
 
     repeat_eval_ckpt(
