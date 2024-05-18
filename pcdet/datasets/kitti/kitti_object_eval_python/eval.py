@@ -742,9 +742,24 @@ def get_official_eval_result(gt_annos, dt_annos, current_classes, PR_detail_dict
                 ret_dict['%s_image/easy_R40' % class_to_name[curcls]] = mAPbbox_R40[j, 0, 0]
                 ret_dict['%s_image/moderate_R40' % class_to_name[curcls]] = mAPbbox_R40[j, 1, 0]
                 ret_dict['%s_image/hard_R40' % class_to_name[curcls]] = mAPbbox_R40[j, 2, 0]
+    
+    if len(current_classes) > 1:
+        for difficulty in range(3):
+            avg_mAP_bbox_R40 = np.mean([mAPbbox_R40[j, difficulty, 0] for j in range(len(current_classes))])
+            avg_mAP_bev_R40 = np.mean([mAPbev_R40[j, difficulty, 0] for j in range(len(current_classes))])
+            avg_mAP_3d_R40 = np.mean([mAP3d_R40[j, difficulty, 0] for j in range(len(current_classes))])
+            if compute_aos:
+                avg_mAP_aos_R40 = np.mean([mAPaos_R40[j, difficulty, 0] for j in range(len(current_classes))])
+            result += print_str(
+                (f"Overall AP_R40@{['easy', 'moderate', 'hard'][difficulty]}:"))
+            result += print_str((f"bbox AP:{avg_mAP_bbox_R40:.4f}"))
+            result += print_str((f"bev  AP:{avg_mAP_bev_R40:.4f}"))
+            result += print_str((f"3d   AP:{avg_mAP_3d_R40:.4f}"))
+            if compute_aos:
+                result += print_str((f"aos  AP:{avg_mAP_aos_R40:.4f}"))
+
 
     return result, ret_dict
-
 
 def get_coco_eval_result(gt_annos, dt_annos, current_classes):
     class_to_name = {
