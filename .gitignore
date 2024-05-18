@@ -7,7 +7,6 @@ data/
 venv/
 *.idea/
 *.so
-*.yaml
 *.sh
 *.pth
 *.pkl
@@ -18,3 +17,6 @@ version.py
 .venv/
 ./data
 ./data/*
+/.vscode
+tools/train_utils/train_utils_weval.py
+tools/train_weval.py
